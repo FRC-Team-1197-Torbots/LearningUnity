@@ -5,6 +5,12 @@ using UnityEngine;
 /**
  * Clone class for "running a robot"
  */
+
+
+
+
+
+ 
 public class Robot : MonoBehaviour
 {
     public enum STATE { DISABLED, ENABLED };
