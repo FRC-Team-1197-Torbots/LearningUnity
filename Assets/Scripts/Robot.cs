@@ -34,7 +34,7 @@ public class Robot : MonoBehaviour
 
     public void teleopInit()
     {
-
+        //
     }
 
     //initalize variables for the start of the robot
