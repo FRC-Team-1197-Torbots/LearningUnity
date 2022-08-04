@@ -145,3 +145,4 @@ public class Robot : MonoBehaviour
 
     #endregion
 }
+// 8/3/22 Create own auto
