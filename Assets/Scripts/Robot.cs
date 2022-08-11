@@ -34,7 +34,7 @@ public class Robot : MonoBehaviour
 
     public void teleopInit()
     {
-
+        //
     }
 
     //initalize variables for the start of the robot
@@ -70,13 +70,11 @@ public class Robot : MonoBehaviour
 
         if (m_drive.isCompleted() && auto_state == AUTO.DRIVEFORWARD)
         {
-            Debug.Log("Switching to Turn");
             auto_state = AUTO.TURN;
             m_drive.SetupAuto();
         }
         else if (m_drive.isCompleted() && auto_state == AUTO.TURN)
         {
-            Debug.Log("Switching to Done");
             auto_state = AUTO.DONE;
             m_drive.SetupAuto();
         }
