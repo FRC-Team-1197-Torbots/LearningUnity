@@ -19,7 +19,7 @@ public class Robot : MonoBehaviour
     public enum MODE { AUTO, TELE, IDLE };
     public MODE m_mode;
 
-    private enum AUTO { DRIVEFORWARD, TURN, DONE };
+    private enum AUTO { DRIVEFORWARD, TURN, TURN2, DRIVEFORWARD2, DRIVEFORWARD3, DRIVEFORWARD4, DONE };
     private AUTO auto_state;
 
     #region WPI Clone Functions
@@ -66,6 +66,10 @@ public class Robot : MonoBehaviour
             case AUTO.TURN:
                 m_drive.TurnFor(-10);
                 break;
+
+            case AUTO.TURN2:
+                m_drive.TurnFor(10);
+                break;
         }
 
         if (m_drive.isCompleted() && auto_state == AUTO.DRIVEFORWARD)
@@ -75,6 +79,12 @@ public class Robot : MonoBehaviour
             m_drive.SetupAuto();
         }
         else if (m_drive.isCompleted() && auto_state == AUTO.TURN)
+        {
+            Debug.Log("Switching to TURN2");
+            auto_state = AUTO.TURN2;
+            m_drive.SetupAuto();
+        }
+         else if (m_drive.isCompleted() && auto_state == AUTO.TURN2)
         {
             Debug.Log("Switching to Done");
             auto_state = AUTO.DONE;

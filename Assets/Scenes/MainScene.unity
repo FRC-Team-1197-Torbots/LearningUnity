@@ -319,6 +319,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot
       objectReference: {fileID: 0}
+    - target: {fileID: 5360504329171241346, guid: 3859f260b678cb14cae8dc60f5e7b756,
+        type: 3}
+      propertyPath: m_mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360504329171241346, guid: 3859f260b678cb14cae8dc60f5e7b756,
+        type: 3}
+      propertyPath: m_state
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5360504329171241349, guid: 3859f260b678cb14cae8dc60f5e7b756,
         type: 3}
       propertyPath: m_RootOrder
