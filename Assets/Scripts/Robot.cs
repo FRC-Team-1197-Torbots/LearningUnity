@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +20,7 @@ public class Robot : MonoBehaviour
     public enum MODE { AUTO, TELE, IDLE };
     public MODE m_mode;
 
-    private enum AUTO { DRIVEFORWARD, TURN, DONE };
+    private enum AUTO { DRIVEFORWARD, TURN, DONE, DRIVEBACKWARD, DRIVEFORWARD1, TURN1 };
     private AUTO auto_state;
 
     #region WPI Clone Functions
@@ -63,9 +63,17 @@ public class Robot : MonoBehaviour
             case AUTO.DRIVEFORWARD:
                 m_drive.DriveFor(1.5f);
                 break;
-
             case AUTO.TURN:
-                m_drive.TurnFor(-10);
+                m_drive.TurnFor(-135);
+                break;
+            case AUTO.DRIVEBACKWARD:
+                m_drive.DriveFor(-1.5f);
+                break;
+            case AUTO.DRIVEFORWARD1:
+                m_drive.DriveFor(3);
+                break;
+            case AUTO.TURN1:
+                m_drive.TurnFor(-88);
                 break;
         }
 
@@ -77,7 +85,23 @@ public class Robot : MonoBehaviour
         }
         else if (m_drive.isCompleted() && auto_state == AUTO.TURN)
         {
+            Debug.Log("Switching to Drive");
+            auto_state = AUTO.DRIVEFORWARD1;
+            m_drive.SetupAuto();
+        }
+        else if (m_drive.isCompleted() && auto_state == AUTO.DRIVEFORWARD1)
+        {
             Debug.Log("Switching to Done");
+            auto_state = AUTO.TURN1;
+            m_drive.SetupAuto();
+        }
+        else if (m_drive.isCompleted() && auto_state == AUTO.TURN1)
+        {
+            auto_state = AUTO.DRIVEBACKWARD;
+            m_drive.SetupAuto();
+        }
+        else if (m_drive.isCompleted() && auto_state == AUTO.DRIVEBACKWARD)
+        {
             auto_state = AUTO.DONE;
             m_drive.SetupAuto();
         }
