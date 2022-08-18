@@ -19,7 +19,10 @@ public class Robot : MonoBehaviour
     public MODE m_mode;
 
     private enum AUTO { DRIVEFORWARD, TURN, DONE };
+    private enum AUTO_EXAMPLE { MOVE_STRAIGHT, ROTATE, DONE};
+
     private AUTO auto_state;
+    private AUTO_EXAMPLE auto_ex_state;
 
     #region WPI Clone Functions
 
@@ -52,9 +55,20 @@ public class Robot : MonoBehaviour
         {
             autonomousInit();
             AutoInitial = false;
-            auto_state = AUTO.DRIVEFORWARD;
+            auto_ex_state = AUTO_EXAMPLE.MOVE_STRAIGHT;
+            //auto_state = AUTO.DRIVEFORWARD;
         }
 
+        switch(auto_ex_state)
+        {
+            case AUTO_EXAMPLE.MOVE_STRAIGHT:
+                m_drive.DriveFor(2f);
+                break;
+
+            case AUTO_EXAMPLE.ROTATE:
+                m_drive.TurnFor(60);
+                break;
+        }    
         //drive forward for 1.5 then rotate 10 degrees
         switch (auto_state)
         {
@@ -67,17 +81,26 @@ public class Robot : MonoBehaviour
                 break;
         }
 
-        if (m_drive.isCompleted() && auto_state == AUTO.DRIVEFORWARD)
+        for (int i = 0; i < 6; i++)
         {
-            Debug.Log("Switching to Turn");
-            auto_state = AUTO.TURN;
-            m_drive.SetupAuto();
-        }
-        else if (m_drive.isCompleted() && auto_state == AUTO.TURN)
-        {
-            Debug.Log("Switching to Done");
-            auto_state = AUTO.DONE;
-            m_drive.SetupAuto();
+            if (m_drive.isCompleted() && auto_ex_state == AUTO_EXAMPLE.MOVE_STRAIGHT && i < 5)
+            {
+                Debug.Log("Switching to Turn");
+                auto_ex_state = AUTO_EXAMPLE.ROTATE;
+                m_drive.SetupAuto();
+            }
+            else if (m_drive.isCompleted() && auto_ex_state == AUTO_EXAMPLE.ROTATE && i < 5)
+            {
+                Debug.Log("Switching to Straight");
+                auto_ex_state = AUTO_EXAMPLE.MOVE_STRAIGHT;
+                m_drive.SetupAuto();
+            }
+            else if (m_drive.isCompleted() && auto_ex_state == AUTO_EXAMPLE.ROTATE && i > 4)
+            {
+                Debug.Log("Switching to Done");
+                auto_ex_state = AUTO_EXAMPLE.DONE;
+                m_drive.SetupAuto();
+            }
         }
     }
 
