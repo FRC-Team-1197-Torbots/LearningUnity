@@ -76,7 +76,23 @@ public class TorDrive : MonoBehaviour
             completed = true;
     }
 
+    public void DriveBack(float distance)
+    {
+        if (Vector3.Distance(StartPosition, transform.position) < distance)
+            transform.position -= -transform.forward * speed * Time.deltaTime;
+        else
+            completed = true;
+        }
+
     public void TurnFor(float rotation)
+    {
+        if (Quaternion.Angle(StartRotation, transform.rotation) < Math.Abs(rotation))
+            transform.Rotate(transform.up, (rotation / Mathf.Abs(rotation)) * rotateSpeed);
+        else
+            completed = true;
+    }
+
+    public void IntakeTurn(float rotation)
     {
         if (Quaternion.Angle(StartRotation, transform.rotation) < Math.Abs(rotation))
             transform.Rotate(transform.up, (rotation / Mathf.Abs(rotation)) * rotateSpeed);
